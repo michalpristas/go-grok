@@ -88,6 +88,16 @@ func NewComplete(additionalPatterns ...map[string]string) *Grok {
 	return g
 }
 
+func (grok *Grok) HasCaptureGroups() bool {
+	for _, groupName := range grok.re.SubexpNames() {
+		if groupName != "" {
+			return true
+		}
+	}
+
+	return false
+}
+
 func (grok *Grok) AddPattern(name, patternDefinition string) {
 	// overwrite existing if present
 	grok.patternDefinitions[name] = patternDefinition
